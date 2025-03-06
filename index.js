@@ -1,23 +1,27 @@
 import express from "express"
 import bodyParser from "body-parser"
-import pg from 'pg'
+import pg from 'pg';
 import methodoverride from "method-override";
 import {body, validationResult} from "express-validator";
 import dotenv from "dotenv";
 dotenv.config();
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
+
 const db = new pg.Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-  })
-  
-  db.connect();
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_URL.includes("render.com") 
+      ? { rejectUnauthorized: false }  // Enable SSL for Render
+      : false  // Disable SSL for local DBs
+});
+
+db.connect()
+  .then(() => console.log("✅ Connected to PostgreSQL!"))
+  .catch(err => console.error("❌ Database connection error:", err));
+
 
   function setDate(books){
     books.forEach((book) => {
