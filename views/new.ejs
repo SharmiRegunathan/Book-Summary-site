@@ -1,0 +1,82 @@
+<%- include("partials/header.ejs")%>
+
+<%if(locals.book && book[0].id != 0){%>
+    <div class = "form-section">
+        <div>
+            <h2>Lets Edit the book</span></h2>
+            <% if (locals.errors && errors.length > 0) { %>
+                    <% errors.forEach(error => { %>
+                        <p style="color: red;"><%= error.msg %></p> 
+                    <% }); %>
+            <% } %>
+            <div class = "input-fields">
+                <form action="/edit/<%= book[0].id %>?_method=PUT" method="post">
+                    <div class = "input-field">
+                        <label for="title">Enter the name of the Book</label>
+                        <input type="text" name="title" value="<%=book[0].title%>" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="author">Enter the author of the Book</label>
+                        <input type="text" name="author" value="<%=book[0].author%>"><br>
+                    </div>
+                    <textarea  class = "input-field" rows="5" cols="50" name="summary" required><%=book[0].summary%></textarea><br>
+                    <div class = "input-field">
+                        <label for="rating">Enter your rating out of 10 (1 - 10)</label>
+                        <input name = "rating" type="number" step="any" min="0" max="10" value="<%=book[0].rating%>" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="isbn">Enter the ISBN number</label>
+                        <input type="tel" name="isbn" value = "<%=book[0].isbn%>" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="link">Enter the link for the book</label>
+                        <input type="text" name="link" value="<%=book[0].link%>"><br>
+                    </div>
+    
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<%}else{%>
+    <div class = "form-section">
+        <div>
+            <h2>Lets add a new book!</span></h2>
+            <% if (locals.errors && errors.length > 0) { %>
+                <% errors.forEach(error => { %>
+                    <p style="color: red;"><%= error.msg %></p> 
+                <% }); %>
+            <% } %>
+            <div class = "input-fields">
+                <form action="/new" method="post">
+                    <div class = "input-field">
+                        <label for="title">Enter the name of the Book</label>
+                        <input type="text" name="title" value="" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="title">Enter the author of the Book</label>
+                        <input type="text" name="author" value=""><br>
+                    </div>
+                    <textarea  class = "input-field" rows="5" cols="50" name="summary" value="" required placeholder="Type in your summary"></textarea><br>
+                    <div class = "input-field">
+                        <label for="rating">Enter your rating out of 10 (1 - 10)</label>
+                        <input name = "rating" type="number" step="any" min="0" max="10" value="" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="title">Enter the ISBN number</label>
+                        <input type="tel" name="isbn" value = "" required><br>
+                    </div>
+                    <div class = "input-field">
+                        <label for="title">Enter the link for the book</label>
+                        <input type="text" name="link"><br>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<%}%>
+
+
+
+<%- include("partials/footer.ejs")%>

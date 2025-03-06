@@ -1,0 +1,50 @@
+<%if(locals.password){%>
+    <%- include("partials/header.ejs",{password:password})%>
+<%}else{%>
+    <%- include("partials/header.ejs")%>
+<%}%>
+<div class = "heading">
+    <h2>Books I’ve Read 📖 <span style="color: #615958;">(So You Don’t Have To... But You Should!)</span></h2>
+    <div style="margin-top: 30px;">
+        <p>Little summaries for the books I've read to recall,<strong> and so you can sound smart without actually reading</strong></p>
+        <p>This page is regularly updated as I read more, so feel free to bookmark and check back in a few months!</p>
+        <p>Sort books by <a href="/best">my top recommendations</a>, <a href="/latest">latest</a> or <a href="/titleSort">title</a></p>
+    </div>
+    
+    <div class = "questions">
+        <div style="margin-top: 30px;">
+            <p>📩 Have Questions or wanna say hi ? Feel free to <a href="mailto:sharmiregunathan@gmail.com">drop a mail</a> (But no book spoilers!)</p>
+        </div>
+
+    </div>
+    
+</div>
+
+<section class = "allbooks">
+    <% for(let i = 0; i < books.length; i++){ %>
+    <div class = "abook">
+        <figure>
+            <a href=""></a>
+            <img class = "bookImg" src="https://covers.openlibrary.org/b/isbn/<%= books[i].isbn %>-M.jpg" alt="">
+          </figure>
+
+    <h2><a href="" ><%= books[i].title %></a></h2>
+    <small>Read on <%= books[i].dateread%>. How strongly I recommend it: <strong><%= books[i].rating%></strong>/10</small>
+    <p class = "summary-content"><%= books[i].summary%></p>
+    <p>Here is the <a href="<%= books[i].link %>" target="_blank">Amazon link</a> to purchase the book</p>
+
+        <div class="buttons-container">
+            <form action="/edit/<%=books[i].id%>" method="get">
+                <button type="submit">Edit ✏️</button>
+            </form>
+            
+            <form action="/delete/<%=books[i].id%>?_method=DELETE" method="post">
+                <button onclick="return confirmDelete(event)" type="submit">Remove ❌</button>
+            </form>
+        </div>
+
+    </div>
+    <% } %>
+</section>
+
+<%- include("partials/footer.ejs")%>
