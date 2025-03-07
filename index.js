@@ -21,7 +21,7 @@ const db = new pg.Client({
 db.connect()
   .then(() => console.log("✅ Connected to PostgreSQL!"))
   .catch(err => console.error("❌ Database connection error:", err));
-
+  
 
   function setDate(books){
     books.forEach((book) => {
